@@ -1,9 +1,15 @@
 package galgeleg;
 
+import brugerautorisation.transport.rmi.Brugeradmin;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +43,17 @@ public class Galgelogik extends UnicastRemoteObject implements GalgelegInterface
 
   public ArrayList<String> getBrugteBogstaver() {
     return brugteBogstaver;
+  }
+
+  public boolean login(String user, String password) {
+    try {
+      Brugeradmin brugeradmin = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
+      brugeradmin.hentBruger(user,password);
+      return true;
+    } catch (NotBoundException | MalformedURLException | RemoteException e) {
+      e.printStackTrace();
+    }
+    return false;
   }
 
   public String getSynligtOrd() {
