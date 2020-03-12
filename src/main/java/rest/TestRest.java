@@ -26,6 +26,7 @@ public class TestRest {
         app.before(ctx -> {
             System.out.println("Javalin Server fik "+ctx.method()+" på " +ctx.url()+ " med query "+ctx.queryParamMap()+ " og form " +ctx.formParamMap());
         });
+
         app.exception(Exception.class, (e, ctx) -> {
             e.printStackTrace();
         });
